@@ -14,15 +14,28 @@ CProtocolCore::~CProtocolCore()
 
 bool CProtocolCore::Initialize()
 {
-	OnInitialize();
+	m_pStopState = new StateStop;
+	m_pPausedState = new StatePaused;
+	m_pPlayingState = new StatePlaying;
+
+	m_pCurrState = m_pStopState;
+
+
+	return OnInitialize();
 }
 bool CProtocolCore::Destroy()
 {
-	OnInitialize();
+	DestroyState();
+
+	
+	return OnInitialize();
 }
 
-bool CProtocolCore::Play()
+bool CProtocolCore::Play(Segment* a_pSegment)
 {
+	m_pCurrState->Play(a_pSegment);
+	//1. check ready
+	
 	OnPlay();
 }
 bool CProtocolCore::Pause()
@@ -31,91 +44,39 @@ bool CProtocolCore::Pause()
 }
 bool CProtocolCore::Stop()
 {
+	//1.stop feeding.
+	//StopFeeding();
+
+	//2.OnStop
 	OnStop();
 }
 
-
-NULL
-READY
-PAUSE
-PREROLL
-PLAY
-STOP
-
-class State
-{
-	m_eCurState;
-	IProtocolCore* m_pStreamingProtocol;
-
-
-	void Play(){
-	void Stop();
-	void Pause();
-	void Seek();
-}
-
-class StatePreroll : public State
-{
-	void Play()
-	{
-		return TRUE;
-	}
-
-	void Stop()
-		{
-			if (!m_pStreamingProtocol->Stop())
-				return FALSE;
-			
-			m_pStreamingProtocol->SetState(m_pStreamingProtocol->GetStateStop())
-		}
-}
-class StatePlay : public State
-{
-
-
-	void Play()
-	{
-		return TRUE;
-	}
-
-	void Stop()
-		{
-			if (!m_pStreamingProtocol->Stop())
-				return FALSE;
-			
-			m_pStreamingProtocol->SetState(m_pStreamingProtocol->GetStateStop())
-		}
-}
-
-
-
-	
-
 bool CProtocolCore::Seek(Segment* a_pSegment)
 {
+	bool res = FALSE;
+	
+	//1. check values
 	if (!a_pSegment)
 		return FALSE;
 
+	//2. set values
 	m_Segment.start = a_pSegment->start;
 	m_Segment.stop = a_pSegment->stop;
 	m_Segment.rate = a_pSegment->rate;
 
-
-	return m_State.Seek(this);
 	
 	if (!IsSeekable())
-		return RESOURCE_ERROR_NOT_SEEKABLE;
+		return FALSE;
 
 	if (FLAG_FLUSH)
 	{
-		SendMessage(MSG_FLUSH);
-		//PostMessage();
+		m_oBus.PostMessage(EMESSAGE_TYPE_INFO_FLUSH);
 		res = OnFlush();
 	}
 
 	if (!res)
-		return RESOURCE_ERROR_FLUSH;
-	
+		return FALSE;
+
 	return OnSeek();
 }
 
@@ -127,20 +88,31 @@ void CProtocolCore::SetProperty(eProtocolCoreProp a_eProp, void* a_pdata)
 		;
 }
 
-void CProtocolCore::AddProtocolObserver(ProtocolObserver* a_pObserver)
+bool CProtocolCore::PostMessage(Message* a_pMessage)
 {
-	m_oObservers.insert(a_pObserver);
+	return m_oBus.PostMessage(a_pMessage);
 }
 
-void CProtocolCore::RemoveProtocolOberver(ProtocolObserver* a_pObserver)
+void CProtocolCore::AddMessageListener(Observer* a_pObserver)
 {
-	m_oObservers.remove(a_pObserver);
+	m_oBus.AddObserver(a_pObserver);
 }
 
-bool CProtocolCore::FeedStream(char* a_pData, unsigned int a_nLen)
+void CProtocolCore::DestroyState()
 {
-	for (list<ProtocolObserver*>::iterator it = m_oObservers.begin(); it != m_oObservers.end(); ++it)
-		it.UpdateStream(this, a_pData, a_nLen);
+	delete m_pStopState;
+	delete m_pPausedState;
+	delete m_pPlayingState;
+
+	m_pCurrState = NULL;
 }
+
+void CProtocolCore::AddFeeder(string a_strKey, Feeder* a_pFeeder)
+{
+	m_pFeeders.insert(pair<string, Feeder*>(a_strKey, a_pFeeder));
+	m_oBus.PostMessage(Message::EMESSAGE_TYPE_INFO_ADDED_FEEDER, (void*)a_pFeeder);
+}
+
+
 
 

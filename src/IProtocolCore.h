@@ -12,16 +12,20 @@ typedef enum _eProtocolCoreProp {
 class Segment
 {
 public:
-	long long start;
-	long long stop;
-	float rate;
+	long long m_nMSposition;
+	//long long stop;
+	float m_nRate;
 };
+
+typedef struct _ConnInfo {
+	string strURL;
+} ConnInfo;
 
 class IProtocolCore
 {
 public:
 	virtual	void Initialize() = 0;
-	virtual	void Destroy() = 0;
+	virtual	void Finalize() = 0;
 	virtual	void Play() = 0;
 	virtual	void Pause() = 0;
 	virtual	void Stop() = 0;
