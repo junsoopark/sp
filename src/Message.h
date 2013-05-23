@@ -3,6 +3,7 @@
 
 class Message
 {
+public:
 	enum EMESSAGE_TYPE
 	{
 		EMESSAGE_TYPE_ERROR_RESOURCE_NOT_FOUND,
@@ -11,10 +12,10 @@ class Message
 		EMESSAGE_TYPE_INFO_FLUSH,
 	};
 
-	const EMESSAGE_TYPE m_eType;
+	EMESSAGE_TYPE m_eType;
 
-	Message(EMESSAGE_TYPE a_eType){m_eType = a_eType}
+	Message(EMESSAGE_TYPE a_eType){m_eType = a_eType;}
 	EMESSAGE_TYPE GetType(){	return m_eType; }
-}
+};
 
 #endif //__MESSAGE_H__

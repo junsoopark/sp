@@ -2,8 +2,8 @@
 
 bool Bus::PostMessage(Message* a_pMessage)
 {
-	SetChagned();
-	NotifyObservers((void*)a_pMessage,NULL);
+	SetChanged();
+	NotifyObservers((void*)a_pMessage, 0);
 
-	return TRUE;
+	return true;
 }

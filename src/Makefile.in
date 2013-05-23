@@ -8,7 +8,7 @@ TARGET		:= $(DLIBNAME)
 
 SUBDIRS		:=
 #SRCS		+= $(wildcard *.cpp)
-SRCS		:= CProtocolCore.cpp Factory.cpp Observable.cpp Observer.cpp
+SRCS		:= CProtocolCore.cpp Factory.cpp Observable.cpp Observer.cpp Bus.cpp
 #OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
 OBJS		+= $(SRCS:.cpp=.o)
 
