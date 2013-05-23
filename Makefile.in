@@ -1,0 +1,15 @@
+.EXPORT_ALL_VARIABLES:
+
+TARGET := sp
+DLIBNAME := $(TARGET).so
+TOPDIR := $(shell /bin/pwd)
+SUBDIRS := src tests hls
+
+CXX := @CXX@
+prefix := @prefix@
+
+#include $(TOPDIR)/Config.mk
+
+all : compile
+
+include $(TOPDIR)/Rules.mk

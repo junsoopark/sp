@@ -1,0 +1,29 @@
+
+LIBNAME		:= sp
+DLIBNAME	:= $(LIBNAME).so
+TARGET		:= $(DLIBNAME)
+
+
+
+
+SUBDIRS		:=
+SRCS		+= $(wildcard *.cpp)
+#OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
+OBJS		+= $(SRCS:.cpp=.o)
+
+CFLAGS		:= -fPIC -c -g -I$(TOPDIR)/include -I$(TOPDIR)/include/sp
+LDFLAGS		:= -L$(TOPDIR)/lib/ -lsp
+
+
+all : $(OBJS)
+	$(CXX) -shared -Wl,-soname,libpcHLS.so.0 -o libpcHLS.so.0.0.0 $(OBJS) $(LDFLAGS)
+	ln -s -f libpcHLS.so.0.0.0 libpcHLS.so
+	ln -s -f libpcHLS.so.0.0.0 libpcHLS.so.0
+	mv ./libpcHLS.* $(TOPDIR)/lib
+
+$(OBJS) : $(SRCS)
+	$(CXX) $(CFLAGS) $(SRCS) 
+	
+
+include $(TOPDIR)/Rules.mk
+

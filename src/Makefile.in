@@ -32,6 +32,7 @@ all : $(OBJS)
 	$(CXX) -shared -Wl,-soname,libsp.so.0 -o libsp.so.0.0.0 $(OBJS) $(LDFLAGS)
 	ln -s -f libsp.so.0.0.0 libsp.so
 	ln -s -f libsp.so.0.0.0 libsp.so.0
+	mkdir -p $(TOPDIR)/lib
 	mv ./libsp.* $(TOPDIR)/lib
 	mkdir -p $(spincludedir)
 	cp $(spincludedir_HEADERS) $(spincludedir)

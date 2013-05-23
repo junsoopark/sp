@@ -1,0 +1,24 @@
+
+TARGET		:= test
+
+
+
+
+SUBDIRS		:=
+SRCS		+= $(wildcard *.cpp)
+#OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
+OBJS		+= $(SRCS:.cpp=.o)
+
+
+CFLAGS		:= -c -g `pkg-config --cflags glib-2.0 gthread-2.0` -I$(TOPDIR)/include
+LDFLAGS		:= -L$(TOPDIR)/lib -lsp `pkg-config --libs glib-2.0 gthread-2.0`
+
+all : $(OBJS)
+	$(CXX) $(OBJS) -o $(TARGET) $(LDFLAGS)
+
+$(OBJS) : $(SRCS)
+	$(CXX) $(CFLAGS) $(SRCS) 
+	
+
+include $(TOPDIR)/Rules.mk
+
