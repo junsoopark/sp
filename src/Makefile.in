@@ -1,0 +1,46 @@
+
+LIBNAME		:= sp
+DLIBNAME	:= $(LIBNAME).so
+TARGET		:= $(DLIBNAME)
+
+
+
+
+SUBDIRS		:=
+#SRCS		+= $(wildcard *.cpp)
+SRCS		:= CProtocolCore.cpp Factory.cpp Observable.cpp Observer.cpp
+#OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
+OBJS		+= $(SRCS:.cpp=.o)
+
+
+CFLAGS		:= -fPIC -c -g
+LDFLAGS		:= -ldl
+
+spincludedir = $(TOPDIR)/include
+spincludedir_HEADERS = \
+	sp.h
+
+spsubincludedir = $(TOPDIR)/include/sp
+spsubincludedir_HEADERS = \
+	Factory.h	\
+	IProtocolCore.h	\
+	CProtocolCore.h	\
+	Observable.h	\
+	Observer.h
+
+all : $(OBJS)
+	$(CXX) -shared -Wl,-soname,libsp.so.0 -o libsp.so.0.0.0 $(OBJS) $(LDFLAGS)
+	ln -s -f libsp.so.0.0.0 libsp.so
+	ln -s -f libsp.so.0.0.0 libsp.so.0
+	mv ./libsp.* $(TOPDIR)/lib
+	mkdir -p $(spincludedir)
+	cp $(spincludedir_HEADERS) $(spincludedir)
+	mkdir -p $(spsubincludedir)
+	cp $(spsubincludedir_HEADERS) $(spsubincludedir)
+
+$(OBJS) : $(SRCS)
+	$(CXX) $(CFLAGS) $(SRCS) 
+	
+
+include $(TOPDIR)/Rules.mk
+

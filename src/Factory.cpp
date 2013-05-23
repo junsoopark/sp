@@ -27,7 +27,7 @@ bool CreateInstance(eCLSID a_eClsid, void** a_ppInstance)
 	if (eCLSID_STREAMINGPROTOCOL == a_eClsid)
 		handle = dlopen("libStreamingProtocolCOM.so", RTLD_LAZY);
 	else if (eCLSID_PROTOCOLCORE_HLS == a_eClsid)
-		handle = dlopen("libProtocolCoreHLS.so", RTLD_LAZY);
+		handle = dlopen("libpcHLS.so", RTLD_LAZY);
 	else
 		cout << "Error. Unknown Clsid." << endl;
 

@@ -10,6 +10,8 @@
 using namespace std;
 
 
+/*
+
 typedef enum _eState {
 	ESTATE_STOP,
 	ESTATE_PAUSED,
@@ -58,7 +60,7 @@ class StatePlaying : public State
 }
 
 
-
+*/
 
 /*
 class StreamDataTransfer //: public Runable
@@ -101,22 +103,25 @@ protected:
 	//
 	ConnInfo m_oConnInfo;
 
-	Bus m_oBus;
-	BitrateConfiguration m_oBitrateConfiguration;
+//	Bus m_oBus;
+//	BitrateConfiguration m_oBitrateConfiguration;
 
 	
-	State *m_pCurrState;
-	State *m_pStopState;
-	State *m_pPausedState;
-	State *m_pPlayingState;
+//	State *m_pCurrState;
+//	State *m_pStopState;
+//	State *m_pPausedState;
+//	State *m_pPlayingState;
 	
-	map<string, Feeder*> m_pFeeders;
+//	map<string, Feeder*> m_pFeeders;
 
 	Segment m_Segment;
 	//string m_strLanguage;
 
 
 public:
+	CProtocolCore();
+	virtual ~CProtocolCore();
+
 	//IProtocolCore
 	virtual	bool Initialize();
 	virtual	bool Finalize();
@@ -127,20 +132,20 @@ public:
 	virtual	void SetProperty(eProtocolCoreProp a_eProp, void* a_pdata);
 
 
-	void AddMessageListener(Observer* a_pObserver);
-	void DestroyState();
+//	void AddMessageListener(Observer* a_pObserver);
+//	void DestroyState();
 
 protected:
 	//CProtocolCore. Subclass should implement below virtual functions.
 	virtual bool OnInitialize() = 0;
-	virtual bool OnDestroy() = 0;
+	virtual bool OnFinalize() = 0;
 	virtual	bool OnPlay() = 0;
 	virtual	bool OnPause() = 0;
 	virtual	bool OnStop() = 0;
 	virtual	bool OnSeek() = 0;
 
 
-	bool AddFeeder(string a_strKey, Feeder* a_pFeeder);
+//	bool AddFeeder(string a_strKey, Feeder* a_pFeeder);
 };
 
 #endif //__CPROTOCOLCORE_H__

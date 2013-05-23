@@ -2,6 +2,8 @@
 #define __IPROTOCOLCORE_H__
 
 
+#include <string>
+
 using namespace std;
 
 typedef enum _eProtocolCoreProp {
@@ -18,18 +20,18 @@ public:
 };
 
 typedef struct _ConnInfo {
-	string strURL;
+	string m_strURL;
 } ConnInfo;
 
 class IProtocolCore
 {
 public:
-	virtual	void Initialize() = 0;
-	virtual	void Finalize() = 0;
-	virtual	void Play() = 0;
-	virtual	void Pause() = 0;
-	virtual	void Stop() = 0;
-	virtual	void Seek(Segment* a_pSegment) = 0;
+	virtual	bool Initialize() = 0;
+	virtual	bool Finalize() = 0;
+	virtual	bool Play() = 0;
+	virtual	bool Pause() = 0;
+	virtual	bool Stop() = 0;
+	virtual	bool Seek(Segment* a_pSegment) = 0;
 	virtual	void SetProperty(eProtocolCoreProp a_eProp, void* a_pdata) = 0;
 };
 

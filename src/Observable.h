@@ -8,11 +8,11 @@ class Observable
 {
 protected:
 	bool m_Changed;
-	std::list<ProtocolObserver>* m_oObservers;
+	std::list<Observer*> m_oObservers;
 	
 public:
 	Observable();
-	~Observable();
+	virtual ~Observable();
 	
 	void SetChanged();
 	void AddObserver(Observer* a_pObserver);

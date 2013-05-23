@@ -14,33 +14,34 @@ CProtocolCore::~CProtocolCore()
 
 bool CProtocolCore::Initialize()
 {
+/*
 	m_pStopState = new StateStop;
 	m_pPausedState = new StatePaused;
 	m_pPlayingState = new StatePlaying;
 
 	m_pCurrState = m_pStopState;
-
+*/
 
 	return OnInitialize();
 }
-bool CProtocolCore::Destroy()
+bool CProtocolCore::Finalize()
 {
-	DestroyState();
+//	DestroyState();
 
 	
 	return OnInitialize();
 }
 
-bool CProtocolCore::Play(Segment* a_pSegment)
+bool CProtocolCore::Play()
 {
-	m_pCurrState->Play(a_pSegment);
+//	m_pCurrState->Play(a_pSegment);
 	//1. check ready
 	
-	OnPlay();
+	return OnPlay();
 }
 bool CProtocolCore::Pause()
 {
-	OnPause();
+	return OnPause();
 }
 bool CProtocolCore::Stop()
 {
@@ -48,23 +49,22 @@ bool CProtocolCore::Stop()
 	//StopFeeding();
 
 	//2.OnStop
-	OnStop();
+	return OnStop();
 }
 
 bool CProtocolCore::Seek(Segment* a_pSegment)
 {
-	bool res = FALSE;
+	bool res = false;
 	
 	//1. check values
 	if (!a_pSegment)
-		return FALSE;
+		return false;
 
 	//2. set values
-	m_Segment.start = a_pSegment->start;
-	m_Segment.stop = a_pSegment->stop;
-	m_Segment.rate = a_pSegment->rate;
+	m_Segment.m_nMSposition = a_pSegment->m_nMSposition;
+	m_Segment.m_nRate = a_pSegment->m_nRate;
 
-	
+/*	
 	if (!IsSeekable())
 		return FALSE;
 
@@ -76,18 +76,18 @@ bool CProtocolCore::Seek(Segment* a_pSegment)
 
 	if (!res)
 		return FALSE;
-
+*/
 	return OnSeek();
 }
 
 void CProtocolCore::SetProperty(eProtocolCoreProp a_eProp, void* a_pdata)
 {
 	if (a_eProp == EPROTOCOL_CORE_PROP_URI)
-		m_strURL = (char*)a_pdata;
+		m_oConnInfo.m_strURL = (char*)a_pdata;
 	else
 		;
 }
-
+/*
 bool CProtocolCore::PostMessage(Message* a_pMessage)
 {
 	return m_oBus.PostMessage(a_pMessage);
@@ -113,6 +113,6 @@ void CProtocolCore::AddFeeder(string a_strKey, Feeder* a_pFeeder)
 	m_oBus.PostMessage(Message::EMESSAGE_TYPE_INFO_ADDED_FEEDER, (void*)a_pFeeder);
 }
 
-
+*/
 
 
