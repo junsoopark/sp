@@ -1,14 +1,17 @@
-#ifndef __IPROTOCOLCORE_H__
-#define __IPROTOCOLCORE_H__
+#ifndef __BUFFER_H__
+#define __BUFFER_H__
 
 
 class Buffer
 {
 public:
-	char* data;
-	int size;
+	void* m_pData;
+	unsigned int m_nSize;
+	usigned long long m_nTimestamp;
+
+	//BufferInfo* m_pInfo;
 };
 
 
-#endif //__IPROTOCOLCORE_H__
+#endif //__BUFFER_H__
 
