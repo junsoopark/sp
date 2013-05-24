@@ -17,7 +17,7 @@ public:
 	void SetChanged();
 	void AddObserver(Observer* a_pObserver);
 	void RemoveOberver(Observer* a_pObserver);
-	bool NotifyObservers(void* a_pParam1, void* a_pParem2);	
+	bool NotifyObservers(long a_pParam1, long a_pParem2);	
 };
 
 #endif //__OBSERVABLE_H__

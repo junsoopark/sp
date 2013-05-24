@@ -1,10 +1,13 @@
 #ifndef __FEEDER_H__
 #define __FEEDER_H__
 
+#include "Observable.h"
+
+class Buffer;
 
 class Feeder : public Observable
 {
-private:
+protected:
 	bool Feed(Buffer* a_pBuffer);
 };
 

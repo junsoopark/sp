@@ -3,6 +3,6 @@
 bool Feeder::Feed(Buffer* a_pBuffer)
 {
 	SetChanged();
-	NotifyObservers((void*)a_pBuffer, NULL);
+	NotifyObservers((long)a_pBuffer, 0);
 }
 

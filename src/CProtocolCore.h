@@ -3,13 +3,15 @@
 
 #include "IProtocolCore.h"
 #include "Observable.h"
+#include "Bus.h"
+#include "Feeder.h"
 
 #include <string>
 #include <map>
 
 using namespace std;
 
-
+//class Feeder;
 /*
 
 typedef enum _eState {
@@ -103,7 +105,7 @@ protected:
 	//
 	ConnInfo m_oConnInfo;
 
-//	Bus m_oBus;
+	Bus m_oBus;
 //	BitrateConfiguration m_oBitrateConfiguration;
 
 	
@@ -112,7 +114,7 @@ protected:
 //	State *m_pPausedState;
 //	State *m_pPlayingState;
 	
-//	map<string, Feeder*> m_pFeeders;
+	map<string, Feeder*> m_pFeeders;
 
 	Segment m_Segment;
 	//string m_strLanguage;
@@ -130,12 +132,14 @@ public:
 	virtual	bool Stop();
 	virtual	bool Seek(Segment* a_pSegment);
 	virtual	void SetProperty(eProtocolCoreProp a_eProp, void* a_pdata);
-
+	virtual void AddMessageListener(Observer* a_pObserver);
 
 //	void AddMessageListener(Observer* a_pObserver);
 //	void DestroyState();
 
 protected:
+	
+
 	//CProtocolCore. Subclass should implement below virtual functions.
 	virtual bool OnInitialize() = 0;
 	virtual bool OnFinalize() = 0;
@@ -145,7 +149,7 @@ protected:
 	virtual	bool OnSeek() = 0;
 
 
-//	bool AddFeeder(string a_strKey, Feeder* a_pFeeder);
+	bool AddFeeder(string a_strKey, Feeder* a_pFeeder);
 };
 
 #endif //__CPROTOCOLCORE_H__

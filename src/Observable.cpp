@@ -25,7 +25,7 @@ void Observable::RemoveOberver(Observer* a_pObserver)
 	m_oObservers.remove(a_pObserver);
 }
 
-bool Observable::NotifyObservers(void* a_pParam1, void* a_pParem2)
+bool Observable::NotifyObservers(long a_pParam1, long a_pParem2)
 {
 	if (m_Changed){
 		for (std::list<Observer*>::iterator it = m_oObservers.begin(); it != m_oObservers.end(); ++it)

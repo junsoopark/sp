@@ -8,7 +8,7 @@ TARGET		:= $(DLIBNAME)
 
 SUBDIRS		:=
 #SRCS		+= $(wildcard *.cpp)
-SRCS		:= CProtocolCore.cpp Factory.cpp Observable.cpp Observer.cpp Bus.cpp
+SRCS		:= CProtocolCore.cpp Factory.cpp Observable.cpp Observer.cpp Bus.cpp Feeder.cpp
 #OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
 OBJS		+= $(SRCS:.cpp=.o)
 
@@ -26,7 +26,11 @@ spsubincludedir_HEADERS = \
 	IProtocolCore.h	\
 	CProtocolCore.h	\
 	Observable.h	\
-	Observer.h
+	Observer.h	\
+	Feeder.h	\
+	Buffer.h	\
+	Bus.h		\
+	Message.h
 
 all : $(OBJS)
 	$(CXX) -shared -Wl,-soname,libsp.so.0 -o libsp.so.0.0.0 $(OBJS) $(LDFLAGS)

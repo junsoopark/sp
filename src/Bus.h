@@ -7,7 +7,7 @@
 class Bus : public Observable
 {
 public:
-	bool PostMessage(Message* a_pMessage);
+	bool PostMessage(Message::EMESSAGE_TYPE a_eMessage, long param);
 };
 
 #endif //__BUS_H__

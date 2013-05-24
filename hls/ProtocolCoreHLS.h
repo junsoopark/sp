@@ -2,12 +2,19 @@
 #define __PROTOCOLCOREHLS_H__
 
 #include "CProtocolCore.h"
+#include "Feeder.h"
+
+class HLSFeeder : public Feeder
+{
+public:
+	static void hls_data_cb(char* data, int size, void* handle);
+};
 
 class CProtocolCoreHLS : public CProtocolCore
 {
 public:
 	CProtocolCoreHLS();
-	~CProtocolCoreHLS();
+	virtual ~CProtocolCoreHLS();
 
 	virtual	bool OnInitialize();
 	virtual	bool OnFinalize();

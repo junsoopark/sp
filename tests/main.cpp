@@ -11,11 +11,52 @@
 using namespace std;
 
 
+
+class StreamReceiver;
+
+StreamReceiver* g_sr;
+
+
+class StreamReceiver : public Observer
+{
+public:
+	void Update(Observable* a_pObservable, long a_pParam1, long a_pParem2)
+	{
+		Buffer* buffer = (Buffer*)a_pParam1;
+		cout << "StreamReceiver::" << __FUNCTION__ << " size : " << buffer->m_nSize << " !!Call LMF API here!!" << endl;
+	}
+
+};
+
+
+class MessageReceiver : public Observer
+{
+public:
+	MessageReceiver()
+{
+cout << "Message rec create" << endl;
+}
+	void Update(Observable* a_pObservable, long a_pParam1, long a_pParam2)
+	{
+		Message::EMESSAGE_TYPE type = (Message::EMESSAGE_TYPE)(a_pParam1);
+		Feeder* feeder = (Feeder*)a_pParam2;
+
+		g_sr = new StreamReceiver;
+		feeder->AddObserver(g_sr );
+		cout << "MessageReceiver::" <<  __FUNCTION__ << " type = " <<  a_pParam1<< endl;
+
+	}
+};
+
 typedef struct _CustomData {
 	GMainLoop *loop;
 	IProtocolCore *protocol;
+	MessageReceiver receiver;
 	bool playing;
 } CustomData;
+
+
+
 
 static gboolean handle_keyboard(GIOChannel *source, GIOCondition cond, CustomData *data)
 {
@@ -47,12 +88,16 @@ static gboolean handle_keyboard(GIOChannel *source, GIOCondition cond, CustomDat
 		data->protocol->Stop();
 		break;
 	case 'q':
+		data->protocol->Stop();
 		g_main_loop_quit(data->loop);
 		break;
 	}
 
 	return TRUE;
 }
+
+
+
 
 
 int main()
@@ -71,6 +116,8 @@ int main()
 
 	CreateInstance(eCLSID_PROTOCOLCORE_HLS, (void**)&(data.protocol));
 	data.protocol->Initialize();
+	data.protocol->AddMessageListener(&data.receiver);
+
 //	StreamingProtocol_SetPeoperty(data.protocol, ESTREAMING_PROTOCOL_PROP_URI, "http://c.brightcove.com/services/mobile/streaming/index/master.m3u8?videoId=1646841329001");
 
 	io_stdin = g_io_channel_unix_new(fileno(stdin));

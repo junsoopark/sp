@@ -29,7 +29,7 @@ bool CProtocolCore::Finalize()
 //	DestroyState();
 
 	
-	return OnInitialize();
+	return OnFinalize();
 }
 
 bool CProtocolCore::Play()
@@ -93,11 +93,6 @@ bool CProtocolCore::PostMessage(Message* a_pMessage)
 	return m_oBus.PostMessage(a_pMessage);
 }
 
-void CProtocolCore::AddMessageListener(Observer* a_pObserver)
-{
-	m_oBus.AddObserver(a_pObserver);
-}
-
 void CProtocolCore::DestroyState()
 {
 	delete m_pStopState;
@@ -106,13 +101,22 @@ void CProtocolCore::DestroyState()
 
 	m_pCurrState = NULL;
 }
+*/
 
-void CProtocolCore::AddFeeder(string a_strKey, Feeder* a_pFeeder)
+
+void CProtocolCore::AddMessageListener(Observer* a_pObserver)
 {
-	m_pFeeders.insert(pair<string, Feeder*>(a_strKey, a_pFeeder));
-	m_oBus.PostMessage(Message::EMESSAGE_TYPE_INFO_ADDED_FEEDER, (void*)a_pFeeder);
+	m_oBus.AddObserver(a_pObserver);
 }
 
-*/
+bool CProtocolCore::AddFeeder(string a_strKey, Feeder* a_pFeeder)
+{
+	m_pFeeders.insert(pair<string, Feeder*>(a_strKey, a_pFeeder));
+	m_oBus.PostMessage(Message::EMESSAGE_TYPE_INFO_ADDED_FEEDER, (long)a_pFeeder);
+	return true;
+}
+
+
+
 
 

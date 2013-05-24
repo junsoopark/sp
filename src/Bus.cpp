@@ -1,9 +1,9 @@
 #include "Bus.h"
 
-bool Bus::PostMessage(Message* a_pMessage)
+bool Bus::PostMessage(Message::EMESSAGE_TYPE a_eMessage, long param)
 {
 	SetChanged();
-	NotifyObservers((void*)a_pMessage, 0);
+	NotifyObservers((long)a_eMessage, param);
 
 	return true;
 }

@@ -12,7 +12,7 @@ SRCS		+= $(wildcard *.cpp)
 OBJS		+= $(SRCS:.cpp=.o)
 
 CFLAGS		:= -fPIC -c -g -I$(TOPDIR)/include -I$(TOPDIR)/include/sp
-LDFLAGS		:= -L$(TOPDIR)/lib/ -lsp
+LDFLAGS		:= -L$(TOPDIR)/lib/ -lsp -lpthread
 
 
 all : $(OBJS)

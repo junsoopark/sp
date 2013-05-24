@@ -4,6 +4,8 @@
 
 #include <string>
 
+class Observer;
+
 using namespace std;
 
 typedef enum _eProtocolCoreProp {
@@ -33,6 +35,7 @@ public:
 	virtual	bool Stop() = 0;
 	virtual	bool Seek(Segment* a_pSegment) = 0;
 	virtual	void SetProperty(eProtocolCoreProp a_eProp, void* a_pdata) = 0;
+	virtual void AddMessageListener(Observer* a_pObserver) = 0;
 };
 
 

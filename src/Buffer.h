@@ -7,7 +7,7 @@ class Buffer
 public:
 	void* m_pData;
 	unsigned int m_nSize;
-	usigned long long m_nTimestamp;
+	unsigned long long m_nTimestamp;
 
 	//BufferInfo* m_pInfo;
 };
