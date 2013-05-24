@@ -102,11 +102,11 @@ bool CProtocolCoreHLS::OnPlay(){
 	//LMF_CONTENT_INFO_T info;
 	//memset(&info, 0x00, sizeof(LMF_CONTENT_INFO_T));
 
-	//API_HLS_Init(MEDIA_CH_A, (char*)strURL.data(), info);
-	Feeder* feeder = new HLSFeeder;
 	HLS_RegisterCB(HLSFeeder::hls_data_cb, feeder);
+	Feeder* feeder = new HLSFeeder;
 	AddFeeder("video", feeder);
 
+	//API_HLS_Init(MEDIA_CH_A, (char*)strURL.data(), info);
 	quit = false;
 	thr_id = pthread_create(&thread, 0, func, (void*)&a);
 	if (thr_id < 0)
