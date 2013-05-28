@@ -26,6 +26,7 @@ AC_CONFIG_FILES(
 Makefile
 src/Makefile
 hls/Makefile
+dash/Makefile
 tests/Makefile
 )
 AC_OUTPUT

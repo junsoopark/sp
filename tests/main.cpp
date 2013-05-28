@@ -116,7 +116,7 @@ int main()
 		g_thread_init(NULL);
 	}
 
-	CreateInstance(eCLSID_PROTOCOLCORE_HLS, (void**)&(data.protocol));
+	CreateInstance(eCLSID_PROTOCOLCORE_DASH, (void**)&(data.protocol));
 	data.protocol->Initialize();
 	data.protocol->AddMessageListener(&data.receiver);
 

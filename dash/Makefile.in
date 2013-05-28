@@ -1,0 +1,29 @@
+
+LIBNAME		:= sp
+DLIBNAME	:= $(LIBNAME).so
+TARGET		:= $(DLIBNAME)
+
+
+
+
+SUBDIRS		:=
+SRCS		+= $(wildcard *.cpp)
+#OBJS		:= &(patsubst %.cpp, %.o, $(wildcard *.cpp))
+OBJS		+= $(SRCS:.cpp=.o)
+
+CFLAGS		:= -fPIC -c -g -I$(TOPDIR)/include -I$(TOPDIR)/include/sp
+LDFLAGS		:= -L$(TOPDIR)/lib/ -lsp -lpthread
+
+
+all : $(OBJS)
+	$(CXX) -shared -Wl,-soname,libpcDASH.so.0 -o libpcDASH.so.0.0.0 $(OBJS) $(LDFLAGS)
+	ln -s -f libpcDASH.so.0.0.0 libpcDASH.so
+	ln -s -f libpcDASH.so.0.0.0 libpcDASH.so.0
+	mv ./libpcDASH.* $(TOPDIR)/lib
+
+$(OBJS) : $(SRCS)
+	$(CXX) $(CFLAGS) $(SRCS) 
+	
+
+include $(TOPDIR)/Rules.mk
+

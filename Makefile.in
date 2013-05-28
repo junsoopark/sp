@@ -3,7 +3,7 @@
 TARGET := sp
 DLIBNAME := $(TARGET).so
 TOPDIR := $(shell /bin/pwd)
-SUBDIRS := src tests hls
+SUBDIRS := src tests hls dash
 
 CXX := @CXX@
 prefix := @prefix@
