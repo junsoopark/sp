@@ -39,12 +39,14 @@ cout << "Message rec create" << endl;
 	void Update(Observable* a_pObservable, long a_pParam1, long a_pParam2)
 	{
 		Message::EMESSAGE_TYPE type = (Message::EMESSAGE_TYPE)(a_pParam1);
+		if (type == Message::EMESSAGE_TYPE_INFO_ADDED_FEEDER)
+{
 		Feeder* feeder = (Feeder*)a_pParam2;
 
 		g_sr = new StreamReceiver;
 		feeder->AddObserver(g_sr );
-		cout << "MessageReceiver::" <<  __FUNCTION__ << " type = " <<  a_pParam1<< endl;
-
+		cout << "MessageReceiver::" <<  __FUNCTION__ << " msg = EMESSAGE_TYPE_INFO_ADDED_FEEDER, name = " <<  feeder->GetName()<< endl;
+}
 	}
 };
 

@@ -7,6 +7,7 @@
 class HLSFeeder : public Feeder
 {
 public:
+	HLSFeeder(char* a_pName) : Feeder(a_pName){}
 	static void hls_data_cb(char* data, int size, void* handle);
 };
 
